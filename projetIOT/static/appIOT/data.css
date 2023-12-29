@@ -1,0 +1,70 @@
+:root {
+    --primary-color: rgb(114, 159, 202);
+    --secondary-color: rgb(114, 159, 202);
+    --text-color: #555555;
+}
+
+/* Set max-width of canvas to 100% and height to auto */
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Set max-width of container to 960px and center it horizontally */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* Make rows a flex container with wrapping */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Set column width to 50% */
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 15px;
+}
+.logo {
+
+    overflow:hidden;
+}
+.logo img{
+width:170px;
+height:auto;
+}
+h1 {
+  font-size: 2.5em;
+  color:  rgb(40, 91, 138);
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase; /* Mettez le texte en majuscules */
+  letter-spacing: 2px; /* Ajoutez un espacement entre les lettres */
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3); /* Ajoutez une ombre au texte */
+}
+
+/* Style the navigation links */
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links li a {
+    color: #ffffff;
+    text-decoration: none;
+}

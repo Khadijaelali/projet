@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'appIOT/style.css' %}">
+
+
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/"></a>
+
+           <img src="{%static 'appIOT/image/remove.png'%}" width="100px"/>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'tableau' %}">Home</a></li>
+            <li><a href="{% url 'graphique' %}">Statistics</a></li>
+
+            <li><a href="/sensor-data/">Dashboard</a></li>
+            <li> <a href="{% url 'download_csv' %}">Download CSV</a></li>
+        </ul>
+
+    </nav>
+<div class="main" >
+        <div class="illustration">
+            <img src="{%static 'appIOT/image/iott.jpeg'%}"  width="600px"/>
+        </div>
+        <div class="text">
+            <h1> Welcome to TempSentry!</h1>
+            <span><br>Your digital application provides an accurate way to monitor the temperature of your medication refrigerator.</span>
+            <a href="{% url 'graphique' %}">Let's try it</a>
+        </div>
+    </div>
+
+</body>
+</html>

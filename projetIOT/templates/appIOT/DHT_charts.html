@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DHT Charts</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<canvas id="temperatureChart"></canvas>
+	<canvas id="humidityChart"></canvas>
+
+	<script>
+		var temperatureReadings = JSON.parse('{{ readings | safe }}').map(function(reading) {
+			return { x: new Date(reading.created_at), y: reading
+
+</body>
+</html>

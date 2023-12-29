@@ -1,0 +1,151 @@
+/* Couleurs */
+
+:root {
+    --primary-color: rgb(114, 159, 202);
+    --secondary-color: rgb(180, 212, 241);
+    --text-color: #000000;
+}
+
+/* Police de caractère */
+
+body {
+    /font-family: Arial, sans-serif;/
+    font-family: 'Roboto', sans-serif;
+
+}
+
+/* Navigation */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 15px;
+}
+.logo {
+
+    overflow:hidden;
+}
+.logo img{
+width:170px;
+height:auto;
+}
+
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 50px;
+}
+.main h1 {
+    font-size: 100px;
+    margin-bottom: 5px;
+    color : rgb(114, 159, 202);
+}
+.main span {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.main .text {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.main a {
+    background-color: rgb(114, 159, 202);
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    align-self: center;
+    margin-right: 80px;
+}
+.dropbtn {
+  background-color: rgb(114, 159, 202);
+  color: white;
+  padding: 16px;
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #a9a6f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+    border-radius:10px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+    border-radius:10px;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;
+  border-radius:10px;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+    border-radius:10px;
+}
+
+.dropdown:hover .dropbtn {
+  background-color:rgb(114, 159, 202);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

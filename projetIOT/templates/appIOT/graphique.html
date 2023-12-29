@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<html>
+  <head>
+    <title>Statics</title>
+    <link rel="stylesheet" href="{% static 'appIOT/data.css' %}">
+  </head>
+
+<body>
+<nav>
+        <div class="logo">
+            <a href="/"></a>
+
+            <img src="{%static 'appIOT/image/remove.png'%}" width="100px"/>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'tableau' %}">Home</a></li>
+            <li><a href="{% url 'graphique' %}">Statistics</a></li>
+
+            <li><a href="/sensor-data/">Dashboard</a></li>
+            <li> <a href="{% url 'download_csv' %}">Download CSV</a></li>
+        </ul>
+    </nav>
+<div class="container">
+    <h1>Graph</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <canvas id="graphique-temp" height="300"></canvas>
+        </div>
+        <div class="col-md-6">
+           <canvas id="graphique-hum" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var temperatureChart, humidityChart;
+
+    function updateTemperatureChart(newTimestamp, newTemperature) {
+        temperatureChart.data.labels.push(newTimestamp);
+        temperatureChart.data.datasets[0].data.push(newTemperature);
+
+        if (temperatureChart.data.labels.length > 10) {
+            temperatureChart.data.labels.shift();
+            temperatureChart.data.datasets[0].data.shift();
+        }
+
+        temperatureChart.update();
+    }
+
+    function updateHumidityChart(newTimestamp, newHumidity) {
+        humidityChart.data.labels.push(newTimestamp);
+        humidityChart.data.datasets[0].data.push(newHumidity);
+
+        if (humidityChart.data.labels.length > 10) {
+            humidityChart.data.labels.shift();
+            humidityChart.data.datasets[0].data.shift();
+        }
+
+        humidityChart.update();
+    }
+
+    fetch('/chart-data/')
+        .then(response => response.json())
+        .then(data => {
+            const lastTenTemps = data.temps.slice(-10);
+            const lastTenTemperature = data.temperature.slice(-10);
+
+            const formattedDatesTemp = lastTenTemps.map(timestamp => {
+                const date = new Date(timestamp);
+                return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            });
+
+            var ctxTemp = document.getElementById('graphique-temp').getContext('2d');
+            temperatureChart = new Chart(ctxTemp, {
+                type: 'line', // Vous pouvez changer le type ici, par exemple, 'bar', 'radar', etc.
+                data: {
+                    labels: formattedDatesTemp,
+                    datasets: [{
+                        label: 'Temperature level',
+                        data: lastTenTemperature,
+                        backgroundColor: lastTenTemperature.map(temp => temp >= 38 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(54, 162, 235, 0.2)'),
+                        borderColor: lastTenTemperature.map(temp => temp >= 38 ? 'rgba(255, 99, 132, 1)' : 'rgba(54, 162, 235, 1)'),
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            const lastTenHumidity = data.humidity.slice(-10);
+
+            const formattedDatesHum = lastTenTemps.map(timestamp => {
+                const date = new Date(timestamp);
+                return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            });
+
+            var ctxHum = document.getElementById('graphique-hum').getContext('2d');
+            humidityChart = new Chart(ctxHum, {
+                type: 'bar', // Vous pouvez changer le type ici, par exemple, 'line', 'radar', etc.
+                data: {
+                    labels: formattedDatesHum,
+                    datasets: [{
+                        label: 'Humidity level',
+                        data: lastTenHumidity,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
+    setInterval(() => {
+        fetch('/latest-data/')
+            .then(response => response.json())
+            .then(newData => {
+                updateTemperatureChart(newData.timestamp, newData.temperature);
+                updateHumidityChart(newData.timestamp, newData.humidity);
+            });
+    }, 5000);
+</script>
+
+</body></html>
+
+{% endblock %}

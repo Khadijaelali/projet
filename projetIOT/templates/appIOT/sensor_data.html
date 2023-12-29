@@ -1,0 +1,56 @@
+{% extends 'base.html' %}>
+
+{% block content %}
+{% load static %}
+
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'appIOT/table.css' %}">
+
+  </head>
+
+  <body>
+  <nav>
+
+        <div class="logo">
+            <a href="/"></a>
+
+            <img src="{%static 'appIOT/image/remove.png'%}" width="100px"/>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'tableau' %}">Home</a></li>
+            <li><a href="{% url 'graphique' %}">Statistics</a></li>
+
+            <li><a href="/sensor-data/">Dashboard</a></li>
+            <li> <a href="{% url 'download_csv' %}">Download CSV</a></li>
+
+        </ul>
+    </nav>
+
+    <h1>Temperature and humidity measurements</h1>
+
+    <table>
+      <thead>
+        <tr>
+
+          <th>Temperature</th>
+          <th>Humidity</th>
+          <th>Date   :     Hour </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for datai in data %}
+          <tr class="{% cycle 'odd' 'even' %}">
+
+            <td>{{ datai.temperature }}</td>
+            <td>{{ datai.humidity }}</td>
+            <td>{{ datai.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  
+  </body>
+</html>
+{% endblock %}
